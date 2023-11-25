@@ -7,6 +7,7 @@ namespace ParcialFinal.DAL
     {
         
         public DbSet<Service> Services { get; set; }
+        public DbSet<ServiceRequest> ServiceRequest { get; set; }
 
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options) {}
 
@@ -14,6 +15,7 @@ namespace ParcialFinal.DAL
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Service>().HasIndex(t => t.Id);
+            //modelBuilder.Entity<ServiceRequest>().HasIndex(t => t.Id);
         }
     }
 }
