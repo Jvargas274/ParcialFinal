@@ -97,35 +97,31 @@ namespace ParcialFinal.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("CustomerName,CarId,SelectedServiceId,Id,CreateDate,ModifiedDate")] ServiceRequest serviceRequest)
+        public async Task<IActionResult> Edit(Guid id, [Bind("CustomerName,CarId,SelectedServiceId,Id,CreateDate,ModifiedDate,DeliveryDate")] ServiceRequest serviceRequest)
         {
             if (id != serviceRequest.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(serviceRequest);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ServiceRequestExists(serviceRequest.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(serviceRequest);
+                await _context.SaveChangesAsync();
             }
-            ViewData["SelectedServiceId"] = new SelectList(_context.Services, "Id", "Name", serviceRequest.SelectedServiceId);
-            return View(serviceRequest);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ServiceRequestExists(serviceRequest.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction("ListAdmin", "ServiceRequests");
         }
 
         // GET: ServiceRequests/Delete/5

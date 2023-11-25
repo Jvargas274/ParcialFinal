@@ -20,5 +20,8 @@ namespace ParcialFinal.DAL.Entities
         [Display(Name = "Servicio Seleccionado")]
         [ForeignKey("SelectedServiceId")]
         public virtual Service SelectedService { get; set; }
+
+        [Display(Name = "Fecha De Entrega")]
+        public virtual DateTime? DeliveryDate { get; set; }
     }
 }
